@@ -1,0 +1,12 @@
+CompileFlags:
+  Add:
+    - -std=gnu++11
+    - -mmcu=atmega328p
+    - -DARDUINO=10808
+    - -DARDUINO_AVR_UNO
+    - -DF_CPU=16000000L
+    - -D__AVR_ATmega328P__
+
+Diagnostics:
+  Suppress:
+    - unknown-warning-option
