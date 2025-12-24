@@ -12,7 +12,7 @@ class Charlie {
    private:
     std::vector<LED> leds;
     std::vector<unsigned char> pins;
-    unsigned char resolution = 0;
+    unsigned resolution = 0;
 
     Animation animation;
     bool status = false;
@@ -23,6 +23,7 @@ class Charlie {
     void resetBoard();
 
     unsigned long lastUpdate = 0;
+    unsigned long currentLoop = 0;
     Frame currentFrame;
 
    public:
@@ -33,6 +34,8 @@ class Charlie {
 
     void addLED(LED led);
     void addPin(unsigned char pin);
+
+    bool isPlaying() { return status; }
 
     void setAnimation(Animation a);
 

@@ -2,19 +2,16 @@
 
 #include <Arduino.h>
 
-Frame::Frame(unsigned char bin) { leds = bin; }
+Frame::Frame(unsigned long bin) { leds = bin; }
 
-Frame::~Frame() {}
-
-void Frame::setLed(unsigned char ledNum, bool state) {
-    leds = state ? leds | (1 << ledNum) : leds & ~(1 << ledNum);
+void Frame::setLed(unsigned ledNum, bool state) {
+    leds = state ? leds | ((unsigned long)1 << ledNum)
+                 : leds & ~((unsigned long)1 << ledNum);
 }
 
-unsigned char Frame::getLed(unsigned char ledNum) {
-    return leds & (1 << ledNum);
+bool Frame::getLed(unsigned ledNum) {
+    return leds & ((unsigned long)1 << ledNum);
 }
-
-void Frame::reset() { leds = 0; }
 
 void Frame::dump() {
     Serial.print("Frame: ");

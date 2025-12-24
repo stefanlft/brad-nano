@@ -14,16 +14,23 @@ class Animation {
     unsigned refreshRate = 0;
     unsigned frameRate = 0;
 
+    unsigned long loop = 0;
+
     bool start = false;
 
    public:
+    Animation() = default;
     Animation(unsigned frameCount);
     Animation(unsigned frameCount, unsigned refreshRate, unsigned frameRate);
     ~Animation() {}
 
     unsigned getRefreshRate() { return refreshRate; }
     unsigned getFrameRate() { return frameRate; }
+
     unsigned getFrameCount() { return frameCount; }
+
+    void setLoop(unsigned long loop) { this->loop = loop; }
+    unsigned long getLoop() { return this->loop; }
 
     void setRefreshRate(unsigned rate);
     void setFrameRate(unsigned rate);

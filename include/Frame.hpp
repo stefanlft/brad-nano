@@ -2,16 +2,20 @@
 
 class Frame {
    private:
-    unsigned char leds = 0;
+    unsigned long leds = 0;
 
    public:
-    Frame(unsigned char bin);
-    ~Frame();
+    Frame(unsigned long bin);
+    ~Frame() {}
 
-    void setLed(unsigned char ledNum, bool state);
+    void setLed(unsigned ledNum, bool state);
 
-    unsigned char getLed(unsigned char ledNum);
+    bool getLed(unsigned ledNum);
 
-    void reset();
+    void reset() { leds = 0; }
+    void all() { leds = 0xFFFFFFFF; }
+
+    unsigned long getLeds() { return leds; }
+
     void dump();
 };

@@ -41,6 +41,10 @@ int Charlie::play() {
     }
 
     status = true;
+    frameIndex = 0;
+    lastUpdate = millis();
+    currentLoop = 0;
+    currentFrame = animation.getFrame(frameIndex);
 
     resetBoard();
 
@@ -48,10 +52,6 @@ int Charlie::play() {
 }
 
 int Charlie::stop() {
-    if (!status || !animation.stopAnimation()) {
-        return 1;
-    }
-
     status = false;
 
     resetBoard();
@@ -67,15 +67,25 @@ void Charlie::update() {
     const unsigned long currTime = millis();
 
     if (currTime - lastUpdate > animation.getFrameRate()) {
-        currentFrame = animation.getFrame(frameIndex++);
         lastUpdate = currTime;
+        currentFrame = animation.getFrame(frameIndex++);
     }
 
+    // Animation completed once
     if (frameIndex >= animation.getFrameCount()) {
-        frameIndex = 0;
+        if (animation.getLoop() == 0) {
+            frameIndex = 0;
+            currentLoop = 0;
+        } else if (animation.getLoop() > ++currentLoop) {
+            frameIndex = 0;
+        } else {
+            delay(animation.getFrameRate());
+            stop();
+            return;
+        }
     }
 
-    for (unsigned char i = 0; i < resolution; ++i) {
+    for (unsigned i = 0; i < resolution; ++i) {
         if (currentFrame.getLed(i)) {
             leds[i].light();
         }
